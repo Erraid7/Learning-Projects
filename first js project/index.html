@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="baner">
+        <h1>To do list</h1>
+        <img src="./imgs/icon.png" alt="icon">
+    </div>
+    <div id="tasks-list">
+        <ul id="not-done-tasks">
+            <li>
+                <button type="button" class="custom-checkbox-button"></button>
+                <span class="task">Memorize Quran.</span>
+                <span class="delete-icon"></span>
+            </li>
+            <li>
+                <button type="button" class="custom-checkbox-button"></button>
+                <span class="task">Watch a course.</span>
+                <span class="delete-icon"></span>
+            </li>
+            <li>
+                <button type="button" class="custom-checkbox-button"></button>
+                <span class="task">Play video game.</span>
+                <span class="delete-icon"></span>
+            </li>
+        </ul>
+        <div id="dvider"></div>
+        <ul id="done-tasks">
+            <li>
+                <button type="button" class="custom-checkbox-button checked"></button>
+                <span class="task">Do sports.</span>
+                <span class="delete-icon"></span>
+            </li>
+            <li>
+                <button type="button" class="custom-checkbox-button checked"></button>
+                <span class="task">read book.</span>
+                <span class="delete-icon"></span>
+            </li>
+        </ul>
+    </div>
+    <div id="add-task">
+        <input type="text" id="task-input" placeholder="Add a new task...">
+        <button type="button" id="add-button" onclick="addTask()">Add</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
