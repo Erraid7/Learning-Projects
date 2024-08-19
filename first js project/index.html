@@ -1,52 +1,61 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To do list</title>
+    <title>To Do List</title>
     <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="baner">
-        <h1>To do list</h1>
-        <img src="./imgs/icon.png" alt="icon">
-    </div>
-    <div id="tasks-list">
+    <header id="banner">
+        <h1>To Do List</h1>
+        <img src="./imgs/icon.png" alt="To Do List Icon">
+    </header>
+
+    <section id="tasks-list">
         <ul id="not-done-tasks">
             <li>
-                <button type="button" class="custom-checkbox-button"></button>
+                <button type="button" class="custom-checkbox-button" aria-label="Mark task as done"></button>
                 <span class="task">Memorize Quran.</span>
-                <span class="delete-icon"></span>
+                <span class="delete-icon" aria-label="Delete task"></span>
             </li>
             <li>
-                <button type="button" class="custom-checkbox-button"></button>
+                <button type="button" class="custom-checkbox-button" aria-label="Mark task as done"></button>
                 <span class="task">Watch a course.</span>
-                <span class="delete-icon"></span>
+                <span class="delete-icon" aria-label="Delete task"></span>
             </li>
             <li>
-                <button type="button" class="custom-checkbox-button"></button>
+                <button type="button" class="custom-checkbox-button" aria-label="Mark task as done"></button>
                 <span class="task">Play video game.</span>
-                <span class="delete-icon"></span>
+                <span class="delete-icon" aria-label="Delete task"></span>
             </li>
         </ul>
-        <div id="dvider"></div>
+
+        <div id="divider"></div>
+
         <ul id="done-tasks">
             <li>
-                <button type="button" class="custom-checkbox-button checked"></button>
+                <button type="button" class="custom-checkbox-button checked" aria-label="Mark task as not done"></button>
                 <span class="task">Do sports.</span>
-                <span class="delete-icon"></span>
+                <span class="delete-icon" aria-label="Delete task"></span>
             </li>
             <li>
-                <button type="button" class="custom-checkbox-button checked"></button>
-                <span class="task">read book.</span>
-                <span class="delete-icon"></span>
+                <button type="button" class="custom-checkbox-button checked" aria-label="Mark task as not done"></button>
+                <span class="task">Read book.</span>
+                <span class="delete-icon" aria-label="Delete task"></span>
             </li>
         </ul>
-    </div>
-    <div id="add-task">
-        <input type="text" id="task-input" placeholder="Add a new task...">
+    </section>
+
+    <section id="add-task">
+        <input type="text" id="task-input" placeholder="Add a new task..." aria-label="New task input">
         <button type="button" id="add-button" onclick="addTask()">Add</button>
-    </div>
+    </section>
+
+    <footer>
+        <p>Created by <a href="https://github.com/Erraid7" target="_blank">Erraid7</a> | &copy; 2024 all copy rights reserved</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
