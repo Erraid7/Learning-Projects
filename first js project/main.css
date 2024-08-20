@@ -78,17 +78,16 @@ li span.task {
     cursor: pointer;
     position: relative;
     margin: 0 5px;
+    transition: 0.2s ease-out;
 }
 
 /* Add an animated hover effect on the checkbox */
 .custom-checkbox-button:hover {
     background-color: rgba(56, 144, 36, 0.3);
-    transition: 0.2s ease-out;
 }
 
 .custom-checkbox-button.checked:hover {
     background-color: rgba(144, 36, 36, 0.394);
-    transition: 0.2s ease-out;
 }
 
 /* Add a checkmark when checked */
@@ -134,13 +133,13 @@ section#add-task input {
     color: rgba(0, 0, 0, 1);
     border: 2px solid rgba(0, 0, 0, 1);
     border-radius: 5px;
+    transition: 0.3s ease-in-out;
 }
 
 /* focus effect on the unput field */
 section#add-task input:focus {
     border: 2px solid rgba(161, 39, 217, 0.8);
     outline: none;
-    transition: 0.3s ease-in-out;
 }
 
 section#add-task button {
@@ -155,11 +154,11 @@ section#add-task button {
     border: 2px solid rgba(0, 0, 0, 1);
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
 
 section#add-task button:hover {
     background-color: rgba(194, 117, 229);
-    transition: 0.2s ease-in-out;
 }
 
 /* Style for the delete icon */
@@ -182,6 +181,7 @@ section#add-task button:hover {
     height: 100%;
     background-color: rgba(54, 54, 54, 0.3);
     transform: translate(-50%, -50%) rotate(45deg);
+    transition: 0.2s ease-in-out;
 }
 
 .delete-icon::after {
@@ -191,7 +191,6 @@ section#add-task button:hover {
 /* Add a hover effect to the delete icon */
 .delete-icon:hover::before, .delete-icon:hover::after {
     background-color: rgb(222, 41, 41);
-    transition: 0.2s ease-in-out;
 }
 
 /* style the footer :
