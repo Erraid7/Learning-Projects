@@ -4,12 +4,12 @@ const notDoneTasks = document.getElementById("not-done-tasks");
 const doneTasks = document.getElementById("done-tasks");
 let tasks;
 
-fetch('./todos.json')
-  .then(response => response.text())
-  .then(data => {
-    tasks = JSON.parse(data);
-    console.log(tasks);
-    tasks.forEach(task => { addTask(task.text, task.completed); });
+fetch('/tasks')
+  .then(response => response.json())
+  .then(tasks => {
+    tasks.forEach(task => {
+      addTask(task.text, task.completed);
+    });
   })
   .catch(error => console.error(error));
 
@@ -62,22 +62,20 @@ function readTask() {
   }
 }
 
-//writing the new task to the file
+//updating the file with the new task
+
 function updateFile(task) {
-  tasks.push({ text: task, completed: false });
-  const data = JSON.stringify(tasks);
-  fetch('./todos.json', {
+  fetch('/tasks', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: data,
+    body: JSON.stringify({ text: task, completed: false }),
   })
-    .then(response => response.text())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.message); // Task added successfully
+  })
+  .catch(error => console.error('Error:', error));
 }
+
