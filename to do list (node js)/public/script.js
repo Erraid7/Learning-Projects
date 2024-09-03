@@ -8,7 +8,7 @@ fetch('/tasks')
   .then(response => response.json())
   .then(tasks => {
     tasks.forEach(task => {
-      addTask(task.text, task.completed);
+      addTask(task);
     });
   })
   .catch(error => console.error(error));
@@ -34,12 +34,16 @@ tasksList.addEventListener("click", function (e) {
 
 
 //adding a new task to the list
-function addTask(task,status) {
+function addTask(task) {
   const newTask = document.createElement("li");
-  newTask.innerHTML = `<button class="custom-checkbox-button"></button>
-  <span class="task">${task}</span>
-  <span class="delete-icon"></span>`;
-  if(status){
+  newTask.setAttribute("data-id", task.id); // Store the ID
+
+  newTask.innerHTML = `
+    <button class="custom-checkbox-button" onclick="toggleTaskStatus(${task.id})"></button>
+    <span class="task">${task.text}</span>
+    <span class="delete-icon" onclick="deleteTask(${task.id})"></span>
+  `;
+  if(task.completed) {
     doneTasks.appendChild(newTask);
     const checkboxButton = newTask.querySelector(".custom-checkbox-button");
     checkboxButton.classList.add("checked");
@@ -49,14 +53,23 @@ function addTask(task,status) {
   }
 }
 
+//generating a unique id for the task
+function generateUniqueId() {
+  return Date.now();
+}
+
 // reading the task from the user input
 function readTask() {
   const task = document.getElementById("task-input").value;
   if (task) {
-    console.log(task);
-    addTask(task);
+    const newTask = {
+      id: generateUniqueId(), // Generate a unique ID for the new task
+      text: task,
+      completed: false // Newly created tasks are incomplete by default
+    };
+    addTask(newTask);
     document.getElementById("task-input").value = "";
-    updateFile(task);
+    updateFile(newTask);
   } else {
     alert("Please enter a task");
   }
@@ -70,11 +83,40 @@ function updateFile(task) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ text: task, completed: false }),
+    body: JSON.stringify(task),
   })
   .then(response => response.json())
   .then(data => {
     console.log(data.message); // Task added successfully
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function toggleTaskStatus(taskId) {
+  fetch(`/tasks/${taskId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.message); // Task updated successfully
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function deleteTask(taskId) {
+  fetch(`/tasks/${taskId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.message); // Task deleted successfully
+    document.querySelector(`li[data-id="${taskId}"]`).remove(); // Remove task from DOM
   })
   .catch(error => console.error('Error:', error));
 }
