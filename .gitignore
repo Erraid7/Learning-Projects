@@ -1,0 +1,43 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files (for Visual Studio Code)
+.vscode/
+*.code-workspace
+
+# Dependency directories
+bower_components/
+
+# Temporary files
+tmp/
+*.tmp
+*.swp
+
+# Build output
+dist/
+build/
+out/
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Ignore coverage reports
+coverage/
+
+# Ignore npm package metadata
+.npm/

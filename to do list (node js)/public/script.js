@@ -36,12 +36,11 @@ tasksList.addEventListener("click", function (e) {
 //adding a new task to the list
 function addTask(task) {
   const newTask = document.createElement("li");
-  newTask.setAttribute("data-id", task.id); // Store the ID
 
   newTask.innerHTML = `
-    <button class="custom-checkbox-button" onclick="toggleTaskStatus(${task.id})"></button>
+    <button class="custom-checkbox-button" onclick="toggleTaskStatus('${task._id}')"></button>
     <span class="task">${task.text}</span>
-    <span class="delete-icon" onclick="deleteTask(${task.id})"></span>
+    <span class="delete-icon" onclick="deleteTask('${task._id}')"></span>
   `;
   if(task.completed) {
     doneTasks.appendChild(newTask);
@@ -53,48 +52,57 @@ function addTask(task) {
   }
 }
 
-//generating a unique id for the task
-function generateUniqueId() {
-  return Date.now();
-}
 
-// reading the task from the user input
-function readTask() {
+// Reading the task from the user input
+async function readTask() {
   const task = document.getElementById("task-input").value;
+  
   if (task) {
     const newTask = {
-      id: generateUniqueId(), // Generate a unique ID for the new task
       text: task,
       completed: false // Newly created tasks are incomplete by default
     };
-    addTask(newTask);
-    document.getElementById("task-input").value = "";
-    updateFile(newTask);
+    
+    try {
+      // Wait for taskId to be returned from updateFile
+      const taskId = await updateFile(newTask); 
+      
+      // Now add the task to the frontend
+      addTask({ _id: taskId, ...newTask });
+
+      // Clear the input field
+      document.getElementById("task-input").value = "";
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
   } else {
     alert("Please enter a task");
   }
 }
 
-//updating the file with the new task
-
-function updateFile(task) {
-  fetch('/tasks', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(task),
-  })
-  .then(response => response.json())
-  .then(data => {
+// Updating the server with the new task and returning the task ID
+async function updateFile(task) {
+  try {
+    const response = await fetch('/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(task)
+    });
+    const data = await response.json();
     console.log(data.message); // Task added successfully
-  })
-  .catch(error => console.error('Error:', error));
+    return data.taskId;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
+
 
 function toggleTaskStatus(taskId) {
   fetch(`/tasks/${taskId}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -103,7 +111,7 @@ function toggleTaskStatus(taskId) {
   .then(data => {
     console.log(data.message); // Task updated successfully
   })
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.log('Error:', error));
 }
 
 function deleteTask(taskId) {
@@ -116,8 +124,7 @@ function deleteTask(taskId) {
   .then(response => response.json())
   .then(data => {
     console.log(data.message); // Task deleted successfully
-    document.querySelector(`li[data-id="${taskId}"]`).remove(); // Remove task from DOM
   })
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.log('Error:', error));
 }
 
